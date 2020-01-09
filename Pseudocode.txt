@@ -1,0 +1,175 @@
+#include "sharedProcessHeader.h"
+
+int main(int argc, char *argv[])
+{
+print(Parent: Starts);
+
+if(validateInput(argc, argv))
+{
+	getSharedMemory(argc);
+	
+	attachMemoryToParent(sharedMemory);
+	
+	fillMemory(memory);
+	
+	displayMemory(memory);
+	
+	fork children and run processes
+	
+	displayMemory();
+	
+	detachMemory();
+	
+	removeMemory();
+	}
+	
+	print(Parent: Finished);
+	
+	return END_FUNCTION;
+}
+
+int validateInput(int argumentCount, char *arguments[])
+{	
+	printf("%s", "Parent: Validate Command Line\n");
+	
+	int arg = 0;
+
+	if(MIN_ARGS <= argumentCount && argumentCount <= MAX_ARGS)
+	{
+		for(arg = 1; arg < argumentCount; arg++)
+		{
+			convert input (arguments[arg]);
+			
+			if(input == 0)
+			{
+				if(strcmp(arguments[arg], "0") != 0)
+				{			
+					return FALSE;
+				}
+			}
+			if(input < MIN_INPUT_VAL || input > MAX_INPUT_VAL)
+			{			
+				return FALSE;
+			}
+		}
+		
+		return TRUE;
+	}	
+	return FALSE;
+}
+
+
+int getSharedMemory(int argumentCount)
+{
+        print(Parent: Requests shared memory);
+
+        int spaces = argumentCount - 1;
+
+        int memory = shmget();
+
+        return memory;
+}
+
+
+
+int attachMemory
+{
+        printf(Parent: Attaches shared memory);
+
+        int shm_ptr = shmat();
+
+        if((intptr_t) shm_ptr == -1)
+		{
+            exit(FAILURE);
+        }
+        else
+        {
+            return shm_ptr;
+        }
+}
+
+void detachMemory
+{
+        printf("%s", "Parent: Detaches shared memory\n");
+
+        shmdt(mem_ptr);
+}
+
+void removeMemory
+{
+        printf("%s", "Parent: Removes shared memory\n");
+
+        shmctl();
+}
+
+void fillMemory(int *mem_ptr, int argumentCount, char* arguments[])
+{
+        printf(Parent: Fills shared memory);
+
+        int arg = 0;
+
+        for(arg = 0; arg < argumentCount - 1; arg++)
+        {
+                mem_ptr[arg] = arguments[arg + 1];
+        }
+}
+
+void displayMemory
+{
+        int args = 0;
+
+        if(role == PARENT)
+        {
+                printf("%s", "Parent: Displays shared memory\n");
+
+                for(args = 0; args < argumentCount - 1; args++)
+                {
+                        printf("%d%s", mem_ptr[args], " ");
+                }
+        }
+        else
+        {
+                printf("%s%d", "        Child ID: ", role);
+                printf("%s", " Displays shared memory \n        ");
+
+                for(args = 0; args < argumentCount - 1; args++)
+                {
+                        printf("%d%s", mem_ptr[args], " ");
+                }
+        }
+
+        printf("%s", "\n");
+}
+
+void executeChildProcess
+{
+        int numOfChildren = argumentCount - 1;
+
+        int currentChild = 0;
+
+		pid = 0;
+		
+        for(currentChild = 0; currentChild < numOfChildren; ++currentChild)
+        {
+                pid = fork();
+
+                printf(Parent: Forks child process);
+
+
+                printf("%s%d%s", "      Child ID: ", currentChild + 1, " Starts\n");
+
+                //child processes
+                displayMemory(currentChild + 1, mem_ptr, argumentCount);
+
+                printf(Updates shared memory);
+
+                mem_ptr[currentChild] = mem_ptr[currentChild] * (currentChild + 1);
+
+                displayMemory(currentChild + 1, mem_ptr, argumentCount)
+                //Exit with code
+                }
+        }
+		
+		wait();
+		check for each child exit code and id
+}
