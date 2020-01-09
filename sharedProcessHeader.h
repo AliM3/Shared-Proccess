@@ -1,8 +1,6 @@
 /*=============================================================================
 |  Source Code:  sharedProcessHeader.h
 |       Author:  Ali Mohammad
-|   Student ID:  5914999  
-|   Assignment:  Program #6 Shared Process
 |
 |     Language:  C
 |	 File Type:  .h
